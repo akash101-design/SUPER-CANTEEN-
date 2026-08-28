@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#ff5a36">
+  <title>Smart Canteen Pro</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div id="toast"></div>
+
+<header>
+  <div class="logo">
+    🍽️ Smart<span>Canteen</span>
+  </div>
+
+  <nav>
+    <a href="#home">Home</a>
+    <a href="#menu">Menu</a>
+    <a href="#orders">Orders</a>
+  </nav>
+
+  <div class="actions">
+    <button onclick="toggleTheme()">🌙</button>
+    <button onclick="showFavorites()">❤️</button>
+    <button class="cartButton" onclick="openCart()">
+      🛒 <b id="cartCount">0</b>
+    </button>
+  </div>
+</header>
+
+<!-- HERO -->
+
+<section class="hero" id="home">
+
+  <div class="heroText">
+
+    <div class="badge">⚡ SMART CAMPUS FOOD</div>
+
+    <h1>
+      Eat Smart.<br>
+      <span>Order Fast.</span>
+    </h1>
+
+    <p>
+      Your digital campus canteen.
+      Order food without waiting in the queue.
+    </p>
+
+    <button class="primary" onclick="goMenu()">
+      Explore Menu 🚀
+    </button>
+
+  </div>
+
+  <div class="heroVisual">
+    <div class="foodCircle">🍔</div>
+    <div class="floating f1">🍕</div>
+    <div class="floating f2">🥤</div>
+    <div class="floating f3">🍟</div>
+  </div>
+
+</section>
+
+<!-- STATS -->
+
+<section class="stats">
+
+  <div>
+    <strong>40+</strong>
+    <span>Food Items</span>
+  </div>
+
+  <div>
+    <strong>4.8 ⭐</strong>
+    <span>Average Rating</span>
+  </div>
+
+  <div>
+    <strong>10 min</strong>
+    <span>Average Pickup</span>
+  </div>
+
+  <div>
+    <strong>24/7</strong>
+    <span>Digital Ordering</span>
+  </div>
+
+</section>
+
+<!-- SMART AI -->
+
+<section class="smart">
+
+  <div class="smartIcon">🤖</div>
+
+  <div>
+    <small>SMART RECOMMENDATION</small>
+    <h2 id="recommendation">
+      Loading recommendation...
+    </h2>
+    <p id="recommendText">
+      Personalized suggestions for you.
+    </p>
+  </div>
+
+  <button onclick="smartCombo()">
+    ✨ Suggest Combo
+  </button>
+
+</section>
+
+<!-- MENU -->
+
+<section class="menu" id="menu">
+
+  <div class="heading">
+    <div>
+      <small>OUR MENU</small>
+      <h2>What are you craving? 🍴</h2>
+    </div>
+
+    <input
+      id="search"
+      type="text"
+      placeholder="🔍 Search food..."
+      oninput="searchFood()"
+    >
+  </div>
+
+  <div class="categories">
+
+    <button class="active" onclick="filterFood('All',this)">
+      All
+    </button>
+
+    <button onclick="filterFood('Breakfast',this)">
+      🌅 Breakfast
+    </button>
+
+    <button onclick="filterFood('Meals',this)">
+      🍛 Meals
+    </button>
+
+    <button onclick="filterFood('Fast Food',this)">
+      🍔 Fast Food
+    </button>
+
+    <button onclick="filterFood('Snacks',this)">
+      🍟 Snacks
+    </button>
+
+    <button onclick="filterFood('Drinks',this)">
+      🥤 Drinks
+    </button>
+
+    <button onclick="filterFood('Dessert',this)">
+      🍰 Dessert
+    </button>
+
+  </div>
+
+  <div class="foodGrid" id="foodGrid"></div>
+
+</section>
+
+<!-- ORDERS -->
+
+<section class="orders" id="orders">
+
+  <div class="heading">
+    <div>
+      <small>MY ORDERS</small>
+      <h2>Order History 📦</h2>
+    </div>
+  </div>
+
+  <div id="orderHistory">
+    <div class="empty">
+      📦
+      <h3>No orders yet</h3>
+      <p>Your completed orders will appear here.</p>
+    </div>
+  </div>
+
+</section>
+
+<!-- CART -->
+
+<div class="overlay" id="overlay" onclick="closeCart()"></div>
+
+<aside class="cart" id="cart">
+
+  <div class="cartHeader">
+    <h2>🛒 My Cart</h2>
+    <button onclick="closeCart()">✕</button>
+  </div>
+
+  <div id="cartItems"></div>
+
+  <div class="bill">
+
+    <div>
+      <span>Subtotal</span>
+      <b>₹<span id="subtotal">0</span></b>
+    </div>
+
+    <div>
+      <span>Discount</span>
+      <b class="green">
+        −₹<span id="discount">0</span>
+      </b>
+    </div>
+
+    <hr>
+
+    <div class="grand">
+      <span>Total</span>
+      <b>₹<span id="total">0</span></b>
+    </div>
+
+    <button class="checkout" onclick="checkout()">
+      Place Order ⚡
+    </button>
+
+  </div>
+
+</aside>
+
+<!-- ORDER MODAL -->
+
+<div class="modal" id="orderModal">
+
+  <div class="orderModal">
+
+    <div class="success">✓</div>
+
+    <h2>Order Confirmed 🎉</h2>
+
+    <p>Your food is being prepared.</p>
+
+    <div class="orderID">
+      <small>ORDER ID</small>
+      <strong id="newOrderID">SC000000</strong>
+    </div>
+
+    <div class="timeline">
+
+      <div class="step active">
+        <span>✓</span>
+        <small>Ordered</small>
+      </div>
+
+      <div class="connector"></div>
+
+      <div class="step">
+        <span>👨‍🍳</span>
+        <small>Preparing</small>
+      </div>
+
+      <div class="connector"></div>
+
+      <div class="step">
+        <span>🍱</span>
+        <small>Ready</small>
+      </div>
+
+    </div>
+
+    <button class="primary" onclick="closeOrder()">
+      Done
+    </button>
+
+  </div>
+
+</div>
+
+<footer>
+
+  <h2>🍽️ SmartCanteen Pro</h2>
+
+  <p>
+    Smart food ordering system for modern campuses.
+  </p>
+
+  <div class="footerLine">
+    Made with ❤️ using HTML • CSS • JavaScript
+  </div>
+
+</footer>
+
+<script src="script.js"></script>
+
+</body>
+      </html>
